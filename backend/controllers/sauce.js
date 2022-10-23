@@ -66,11 +66,11 @@ exports.getOneSauce = (req, res, next) => {
 };
 
 exports.modifySauce = (req, res, next) => {
+  let sauce = new Sauce({ _id: req.params._id });
+  if (req.file) {
+    const url = req.protocol + '://' + req.get('host');
     req.body.sauce = JSON.parse(req.body.sauce);
-    let sauce = new Sauce({ _id: req.params._id });
-    if (req.file) {
-      const url = req.protocol + '://' + req.get('host');
-      sauce = {
+    sauce = {
         _id: req.params.id,
         name: req.body.sauce.name,
         manufacturer: req.body.sauce.manufacturer,
@@ -80,7 +80,7 @@ exports.modifySauce = (req, res, next) => {
         heat: req.body.sauce.heat,
         userId: req.body.sauce.userId,
         likes: usersLiked.length,
-        dislikes: usersDisiked.length,
+        dislikes: usersDisliked.length,
       };
     } else {
       sauce = {
@@ -88,9 +88,12 @@ exports.modifySauce = (req, res, next) => {
         name: req.body.name,
         manufacturer: req.body.manufacturer,
         description: req.body.description,
+        imageUrl: req.body.imageUrl,
         mainPepper: req.body.mainPepper,
         heat: req.body.heat,
-        userId: req.body.userId
+        userId: req.body.sauce.userId,
+        likes: usersLiked.length,
+        dislikes: usersDisliked.length,
       };
     }
     Sauce.updateOne({_id: req.params.id}, sauce).then(
@@ -131,18 +134,19 @@ exports.deleteSauce = (req, res, next) => {
     );
 };
 
-// exports.modifyLikes = (req, res, next) => {
-//   Sauce.findOne({_id: req.params.id}).then(
-//     (sauce) => {
-//       likes = usersLiked.length,
-//       dislikes = usersDisliked.length,}
-
-//       if (sauce.likes.filter(likes => usersLiked.user = req.user.id).length > 0) {
-//         res.status(200).json({
-//         message: 'You have already liked this sauce!'
-//         });
+exports.modifyLikes = (req, res, next) => {
 
 
-//     }
-//   )
-// }
+      if (sauce.likes.filter(usersLiked => usersLiked.user.toString() === req.user.id).length > 0) {
+        res.status(400).json({
+        message: 'You have already liked this sauce!'
+        }) 
+      } else if (sauce.likes.filter(usersDisliked => usersDisliked.user.toString() === req.user.id).length > 0) {
+        res.status(400).json({
+        message: 'You have already disliked this sauce!'
+        });
+      } else {
+
+      }
+}
+  
