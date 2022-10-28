@@ -149,13 +149,13 @@ exports.deleteSauce = (req, res, next) => {
 //         .then(() => res.status(200).json({message: 'Your rating has been recorded!'}))
 //         .catch((error) => res.status(400).json({error: error}));
 
-//       } else if (req.body.dislike === -1 && !sauce.usersDisliked.includes(req.body.userId) && !sauce.usersLiked.includes(req.body.userId)) {
+//       } else if (req.body.like === -1 && !sauce.usersDisliked.includes(req.body.userId) && !sauce.usersLiked.includes(req.body.userId)) {
 //       // if this user is not part of the like/dislike arrray, then include their dislike          
 //         Sauce.updateOne({_id: req.params.id}, {$push: {usersDisliked: req.body.userId}}, {$inc: {dislikes: 1}})
 //         .then(() => res.status(200).json({message: 'Your rating has been recorded!'}))
 //         .catch((error) => res.status(400).json({error: error})); 
         
-//       } else if ((req.body.dislike === 0 && sauce.usersDisliked.includes(req.body.userId))) {
+//       } else if ((req.body.like === 0 && sauce.usersDisliked.includes(req.body.userId))) {
 //       // if this user is part of the dislike array and dislike = 0, then remove their dislike
 //         Sauce.updateOne({_id: req.params.id}, {$pull: {usersDisliked: req.body.userId}}, {$inc: {dislikes: -1}})
 //         .then(() => res.status(200).json({message: 'Your rating has been recorded!'}))
@@ -163,8 +163,7 @@ exports.deleteSauce = (req, res, next) => {
 //       } 
 //     }
 //   ).catch(
-//     (error) => { res.status(400).json({ error: error })}
-//     )
+//     (error) => { res.status(400).json({ error: error })})
 // };
 
 exports.modifyLikes = (req, res, next) =>  {
@@ -193,8 +192,8 @@ exports.modifyLikes = (req, res, next) =>  {
       }
       Sauce.updateOne({ _id: req.params.id },
         { likes: sauce.likes, usersLiked: sauce.usersLiked, dislikes: sauce.dislikes, usersDisliked: sauce.usersDisliked }
-        ).then(() => res.status(200).json({ message: 'Sauce updated successfully!'}))
-        .catch(error => res.status(400).json({ error: error }));
+        ).then(() => res.status(200).json({message: 'Your rating has been recorded!'}))
+        .catch((error) => res.status(400).json({error: error}));
   })
-  .catch(error =>res.status(500).json({ error : error }))
+  .catch((error) => { res.status(400).json({ error: error })})
 }
