@@ -1,7 +1,5 @@
-// const { render } = require('../app');
 const Sauce = require('../models/sauce');
 const fs = require('fs');
-// const sauce = require('../models/sauce');
 
 exports.addSauce = (req, res, next) => {
     req.body.sauce = JSON.parse(req.body.sauce);
@@ -35,7 +33,7 @@ exports.addSauce = (req, res, next) => {
       }
     );
 };
-  
+
 exports.getAllSauces = (req, res, next) => {
     Sauce.find().then(
       (Sauces) => {
