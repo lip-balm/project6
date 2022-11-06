@@ -1,5 +1,3 @@
-// spicy@spicy.com veryspicy
-
 // the controller accepts the requests and handles it
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -73,4 +71,3 @@ exports.login = (req, res, next) => {
       }
     );
 };
-
