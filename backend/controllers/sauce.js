@@ -34,6 +34,12 @@ exports.addSauce = (req, res, next) => {
     );
 };
 
+// Demo Sauce Details
+// TRUFF
+// Hot Sauce
+// TRUFF Hot Sauce is a curated blend of ripe chili peppers, organic agave nectar, black truffle, and savory spices. 
+// Red Chili Peppers
+
 exports.getAllSauces = (req, res, next) => {
     Sauce.find().then(
       (Sauces) => {
